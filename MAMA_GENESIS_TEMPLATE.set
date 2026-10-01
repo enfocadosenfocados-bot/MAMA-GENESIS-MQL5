@@ -1,6 +1,6 @@
 ; Parametros de Optimizacion Genetica MAMA GENESIS QUANT ULTRA (+103 Indicadores)
 ; Creado para MetaTrader 5 - Algoritmo Genetico Every Tick
-InpRelationMode=1||0||1||4||Y
+InpRelationMode=1||0||1||6||Y
 InpGeneIndA=1||0||1||102||Y
 InpGeneIndB=0||0||1||102||Y
 InpGeneIndC=38||0||1||102||Y

@@ -81,11 +81,13 @@ Todos los indicadores están integrados en el enum `ENUM_QUANT_IND_TYPE` (`QIND_
 
 ## 🔀 Modos de Combinatoria Relacional (`InpRelationMode`)
 
-* **`REL_DOUBLE_CROSS` (0):** Cruces Dobles Simultáneos [(`IndA` cruza `IndB`) Y (`IndC` cruza `IndD`)].
-* **`REL_CROSS_AND_DOUBLE_LEVEL` (1):** Cruce + Doble Nivel [(`IndA` cruza `IndB`) Y (`IndC > IndD`) Y (`IndE >= Umbral`)].
-* **`REL_CROSS_AND_SLOPE` (2):** Cruce + Pendiente Acelerada [(`IndA` cruza `IndB`) Y (`IndC[1] > IndC[2]`) Y Filtro de Volatilidad].
-* **`REL_CHANNEL_REVERSION_AND_OSC` (3):** Reversión en Bandas Exóticas [Rebote en Keltner / Donchian / Camarilla + Sobreventa/Sobrecompra].
-* **`REL_BREAKOUT_AND_VOLUMES` (4):** Ruptura de Canal con Expansión de Volumen y Volatilidad.
+* **`REL_SINGLE_CROSS` (0):** **Cruce Simple Normal Puro** [(`IndA` cruza `IndB`)]. Ideal para evaluar cruces tradicionales de 2 medias o 2 osciladores.
+* **`REL_DOUBLE_CROSS` (1):** **Cruces Dobles Simultáneos** [(`IndA` cruza `IndB`) Y (`IndC` cruza `IndD`)].
+* **`REL_CROSS_AND_DOUBLE_LEVEL` (2):** **Cruce + Doble Nivel** [(`IndA` cruza `IndB`) Y (`IndC > IndD`) Y (`IndE >= Umbral`)].
+* **`REL_CROSS_AND_SLOPE` (3):** **Cruce + Pendiente Acelerada** [(`IndA` cruza `IndB`) Y (`IndC[1] > IndC[2]`) Y Filtro de Volatilidad].
+* **`REL_CHANNEL_REVERSION_AND_OSC` (4):** **Reversión en Bandas Exóticas** [Rebote en Keltner / Donchian / Camarilla + Sobreventa/Sobrecompra].
+* **`REL_BREAKOUT_AND_VOLUMES` (5):** **Ruptura de Canal con Expansión de Volumen y Volatilidad**.
+* **`REL_DOUBLE_LEVEL_ONLY` (6):** **Doble Nivel Relativo Puro** [(`IndA > IndB`) Y (`IndC > IndD`) Y Filtro de Régimen].
 
 ---
 

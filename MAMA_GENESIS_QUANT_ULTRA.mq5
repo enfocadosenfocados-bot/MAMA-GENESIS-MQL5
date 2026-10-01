@@ -143,11 +143,13 @@ enum ENUM_QUANT_IND_TYPE
 
 enum ENUM_RELATION_MODE
   {
-   REL_DOUBLE_CROSS,                 // 0: Cruce Doble [(IndA x IndB) Y (IndC x IndD)]
-   REL_CROSS_AND_DOUBLE_LEVEL,       // 1: Cruce + Doble Nivel [(IndA x IndB) Y (IndC > IndD) Y (IndE > Umbral)]
-   REL_CROSS_AND_SLOPE,              // 2: Cruce + Pendiente Acelerada [(IndA x IndB) Y (IndC[1] > IndC[2]) Y Filtro]
-   REL_CHANNEL_REVERSION_AND_OSC,    // 3: Reversion de Canal Exotico + Doble Oscilador
-   REL_BREAKOUT_AND_VOLUMES          // 4: Ruptura de Canal Exotico + Expansion de Flujo / Volatilidad
+   REL_SINGLE_CROSS,                 // 0: Cruce Simple Normal Puro [(IndA x IndB)]
+   REL_DOUBLE_CROSS,                 // 1: Cruce Doble [(IndA x IndB) Y (IndC x IndD)]
+   REL_CROSS_AND_DOUBLE_LEVEL,       // 2: Cruce + Doble Nivel [(IndA x IndB) Y (IndC > IndD) Y (IndE > Umbral)]
+   REL_CROSS_AND_SLOPE,              // 3: Cruce + Pendiente Acelerada [(IndA x IndB) Y (IndC[1] > IndC[2]) Y Filtro]
+   REL_CHANNEL_REVERSION_AND_OSC,    // 4: Reversion de Canal Exotico + Doble Oscilador
+   REL_BREAKOUT_AND_VOLUMES,         // 5: Ruptura de Canal Exotico + Expansion de Flujo / Volatilidad
+   REL_DOUBLE_LEVEL_ONLY             // 6: Doble Nivel Relativo Puro [(IndA > IndB) Y (IndC > IndD) Y Filtro]
   };
 
 //+------------------------------------------------------------------+
@@ -616,7 +618,18 @@ void OnTick()
    // EVALUACION SEGUN MODO DE RELACION CUANTITATIVA
    switch(InpRelationMode)
      {
-      // Modo 0: Cruce Doble [(A x B) Y (C x D)]
+      // Modo 0: Cruce Simple Normal Puro [(A x B)]
+      case REL_SINGLE_CROSS:
+        {
+         bool cross_buy  = (a2 <= b2 && a1 > b1);
+         bool cross_sell = (a2 >= b2 && a1 < b1);
+
+         signal_buy  = cross_buy;
+         signal_sell = cross_sell;
+         break;
+        }
+
+      // Modo 1: Cruce Doble [(A x B) Y (C x D)]
       case REL_DOUBLE_CROSS:
         {
          bool cross1_buy  = (a2 <= b2 && a1 > b1);
@@ -629,7 +642,7 @@ void OnTick()
          break;
         }
 
-      // Modo 1: Cruce Simple + Doble Nivel [(A x B) Y (C > D) Y (E > Umbral)]
+      // Modo 2: Cruce Simple + Doble Nivel [(A x B) Y (C > D) Y (E > Umbral)]
       case REL_CROSS_AND_DOUBLE_LEVEL:
         {
          bool cross_buy  = (a2 <= b2 && a1 > b1);
@@ -642,7 +655,7 @@ void OnTick()
          break;
         }
 
-      // Modo 2: Cruce + Pendiente Acelerada [(A x B) Y (C[1] > C[2]) Y (E > Umbral)]
+      // Modo 3: Cruce + Pendiente Acelerada [(A x B) Y (C[1] > C[2]) Y (E > Umbral)]
       case REL_CROSS_AND_SLOPE:
         {
          bool cross_buy  = (a2 <= b2 && a1 > b1);
@@ -655,7 +668,7 @@ void OnTick()
          break;
         }
 
-      // Modo 3: Reversion de Canal Exotico + Doble Oscilador
+      // Modo 4: Reversion de Canal Exotico + Doble Oscilador
       case REL_CHANNEL_REVERSION_AND_OSC:
         {
          double close1 = iClose(_Symbol, PERIOD_CURRENT, 1);
@@ -667,7 +680,7 @@ void OnTick()
          break;
         }
 
-      // Modo 4: Ruptura de Canal + Flujo / Volatilidad
+      // Modo 5: Ruptura de Canal + Flujo / Volatilidad
       case REL_BREAKOUT_AND_VOLUMES:
         {
          double close1 = iClose(_Symbol, PERIOD_CURRENT, 1);
@@ -676,6 +689,19 @@ void OnTick()
 
          signal_buy  = (brk_buy && e1 >= InpThresholdE);
          signal_sell = (brk_sell && e1 >= InpThresholdE);
+         break;
+        }
+
+      // Modo 6: Doble Nivel Relativo Puro [(A > B) Y (C > D) Y (E >= Umbral)]
+      case REL_DOUBLE_LEVEL_ONLY:
+        {
+         bool lvl1_buy  = (a1 > b1);
+         bool lvl1_sell = (a1 < b1);
+         bool lvl2_buy  = (c1 > d1 && e1 >= InpThresholdE);
+         bool lvl2_sell = (c1 < d1 && e1 >= InpThresholdE);
+
+         signal_buy  = (lvl1_buy && lvl2_buy);
+         signal_sell = (lvl1_sell && lvl2_sell);
          break;
         }
      }
