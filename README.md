@@ -111,6 +111,27 @@ Para evitar la típica divergencia donde un bot gana en backtest y pierde en cue
 
 ---
 
+## 💎 Las 3 Claves de Oro Incorporadas
+
+1. **Filtro Cuantitativo de Sesión Institucional (`InpSessionFilter`):**
+   * `SESSION_ALL_DAY` (0): Libre 24 Horas sin restricciones (para activos cripto o rangos completos).
+   * `SESSION_LONDON` (1): Sesión de Londres (08:00 a 16:00 GMT / 10:00 a 18:00 Servidor IC Markets).
+   * `SESSION_NEW_YORK` (2): Sesión de Nueva York (13:00 a 21:00 GMT / 15:00 a 23:00 Servidor IC Markets).
+   * `SESSION_OVERLAP_LDN_NY` (3): Máxima Liquidez / Solapamiento Londres + NY (15:00 a 19:00 Servidor).
+   * `SESSION_ASIA` (4): Sesión Asiática / Tokio (02:00 a 10:00 Servidor), ideal para reversión a la media.
+
+2. **Función de Fitness Cuantitativo Personalizado (`double OnTester()`):**
+   * En el Optimizador de MT5 se selecciona el criterio de optimización: **`Custom Max`**.
+   * La función evalúa matemáticamente cada pase genético con la fórmula institucional:
+     $$\text{Fitness} = (2 \cdot \text{Sharpe} + \text{ProfitFactor}) \cdot \left(1 - \frac{\text{Drawdown}}{100}\right)^2 \cdot \sqrt{\text{Trades}} \cdot \text{RecoveryFactor} \cdot 100$$
+   * Filtros descalificatorios inmediatos: Si el pase hace menos de 25 operaciones, genera pérdida neta o el Profit Factor es inferior a 1.15, el Fitness devuelve `0.0`. Esto obliga al algoritmo genético a **descartar golpes de suerte y buscar únicamente curvas ascendentes suaves a 45°**.
+
+3. **Generador y Exportador Autónomo a Código Standalone (`ExportStandaloneStrategy`):**
+   * Tan pronto como un pase genético supera el umbral sobresaliente de Fitness ($Score > 150.0$), MAMA extrae y redacta automáticamente un archivo `.mq5` limpio e independiente en la carpeta `MQL5\Files\` (`MAMA_DISCOVERY_[SIMBOLO]_[SCORE].mq5`).
+   * Este archivo contiene la parametrización definitiva lista para operar en vivo sin la sobrecarga del explorador genético.
+
+---
+
 ## ⚡ Rendimiento y Optimización de Ultra-Alta Velocidad
 
 * **Lazy-Loading de Memoria:** En cada iteración del Algoritmo Genético, el EA **únicamente crea los handles de los 5 indicadores activos** seleccionados en los genes (`OnInit`), y los libera inmediatamente en `OnDeinit`.
