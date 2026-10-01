@@ -1,0 +1,35 @@
+; Parametros de Optimizacion Genetica MAMA GENESIS QUANT ULTRA (+103 Indicadores)
+; Creado para MetaTrader 5 - Algoritmo Genetico Every Tick
+InpRelationMode=1||0||1||4||Y
+InpGeneIndA=1||0||1||102||Y
+InpGeneIndB=0||0||1||102||Y
+InpGeneIndC=38||0||1||102||Y
+InpGeneIndD=1||0||1||102||Y
+InpGeneIndE=43||0||1||102||Y
+InpPeriodA=14||10||10||50||Y
+InpPeriodB=50||20||20||100||Y
+InpPeriodC=14||10||5||30||Y
+InpPeriodD=200||50||50||200||Y
+InpPeriodE=14||10||10||30||N
+InpThresholdC=50.0||40.0||10.0||60.0||Y
+InpThresholdE=0.001||0.001||0.001||0.005||N
+InpLots=0.10
+InpMaxLossUSD=15.0
+InpATRStopMultiplier=1.80||1.20||0.30||2.50||Y
+InpMinStopLossPoints=80
+InpTakeProfitPoints=600||400||100||800||Y
+InpUsePartialClose=true
+InpPartialTargetPoints=250||150||50||350||Y
+InpPartialRatio=0.50
+InpUseBreakeven=true
+InpBreakevenLockPoints=30
+InpUseTrailing=true
+InpTrailingStartPoints=350||250||50||500||Y
+InpTrailingDistancePoints=150||100||50||250||Y
+InpMaxSpreadPoints=45
+InpStartHour=1
+InpEndHour=22
+InpCloseFriday=true
+InpFridayCloseHour=21
+InpMagicNumber=20268888
+InpSlippage=50

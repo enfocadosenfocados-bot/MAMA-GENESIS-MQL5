@@ -1,0 +1,16 @@
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*~
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# IDE / Editor files
+.vscode/
+.idea/
